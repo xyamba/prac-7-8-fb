@@ -1,4 +1,4 @@
-// index.js — Практика 8 (исправлено: регистрация и логин работают в Swagger)
+
 
 const express = require('express');
 const { nanoid } = require('nanoid');
@@ -10,11 +10,11 @@ const swaggerUi = require('swagger-ui-express');
 const app = express();
 const port = 3000;
 
-// === Настройки JWT ===
+
 const JWT_SECRET = "super-secret-key-2026-macbook";
 const ACCESS_EXPIRES_IN = "1h";
 
-// === Swagger настройки (с компонентами schemas) ===
+
 const swaggerOptions = {
     definition: {
         openapi: '3.0.0',
@@ -89,20 +89,20 @@ const swaggerOptions = {
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-// === Парсинг JSON (ОБЯЗАТЕЛЬНО до всех маршрутов!) ===
+
 app.use(express.json());
 
-// === Логирование запросов ===
+
 app.use((req, res, next) => {
     console.log(`${new Date().toISOString()} ${req.method} ${req.path}`);
     next();
 });
 
-// === Базы данных ===
+
 let users = [];
 let products = [];
 
-// === Вспомогательные функции ===
+
 function findUserByEmail(email) {
     return users.find(u => u.email === email);
 }
@@ -137,7 +137,7 @@ async function verifyPassword(password, hashedPassword) {
     return await bcrypt.compare(password, hashedPassword);
 }
 
-// === Middleware: Проверка JWT ===
+
 function authMiddleware(req, res, next) {
     const header = req.headers.authorization || '';
     const [scheme, token] = header.split(' ');
