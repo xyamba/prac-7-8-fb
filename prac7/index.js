@@ -1,8 +1,8 @@
-// index.js
+
 
 const express = require('express');
 const { nanoid } = require('nanoid');
-const bcrypt = require('bcryptjs'); // ← здесь bcryptjs вместо bcrypt
+const bcrypt = require('bcryptjs'); 
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
@@ -19,15 +19,12 @@ const swaggerOptions = {
         },
         servers: [{ url: `http://localhost:${port}` }],
     },
-    apis: ['./index.js'], // этот файл сам себя документирует
+    apis: ['./index.js'], 
 };
 
 let users = [];
 let products = [];
 
-// ────────────────────────────────────────────────
-// Вспомогательные функции
-// ────────────────────────────────────────────────
 
 function findUserByEmail(email) {
     return users.find(u => u.email === email);
@@ -69,7 +66,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use(express.json());
 
-// Логирование запросов (для отладки)
+
 app.use((req, res, next) => {
     res.on('finish', () => {
         console.log(`[${new Date().toISOString()}] ${req.method} ${res.statusCode} ${req.path}`);
@@ -321,7 +318,7 @@ app.delete('/api/products/:id', (req, res) => {
     res.status(204).send();
 });
 
-// ────────────────────────────────────────────────
+
 
 app.listen(port, () => {
     console.log(`Сервер запущен → http://localhost:${port}`);
